@@ -1,112 +1,40 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # FIN 514 - PS3 Q3 CRR
-# **Spring 2020**
-# 
-# This notebook provides the graphs for PS3 Q3 for the CRR model
-# 
-# ## Packages and Configurations
-# 
-# The following common packages will be use on this notebook.
-# 
-# * numpy - [https://numpy.org/](https://numpy.org/)
-# * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
-# * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
-# * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
-
-# In[136]:
-
+# FIN 514 - PS3 Q3 CRR
+# Spring 2020
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
 
-
-# 
-
-# 
-# 
-
-# 
-
-# In[137]:
-
-
 # ENTER INPUT FOR: start_step
-
 start_step = 50
 
-
-# In[138]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 1000
 
-
-# In[139]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[140]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 100
-
-
-# In[141]:
-
 
 # ENTER INPUT FOR: B = Barrier level
 B = 95
 
-
-# In[142]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[143]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[144]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[145]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
 
 
-# ## Black-Sholes Model 
-
-# In[146]:
-
+# Black-Sholes Model 
 
 def black_scholes(S0, K, B, T, r, q, sigma):
     """
@@ -137,11 +65,7 @@ def black_scholes(S0, K, B, T, r, q, sigma):
     return value
 
 
-# ## Binomial Model Function
-
-# In[147]:
-
-
+# Binomial Model Function
 
 def CRRB_model(S0, K, B, T, r, sigma, start_step, N):
     """
@@ -219,58 +143,30 @@ def CRRB_model(S0, K, B, T, r, sigma, start_step, N):
     return crrb_result
 
 
-# In[148]:
-
-
 crr = CRRB_model(S0, K, B, T, r, sigma, start_step, N)
-
-
-# In[149]:
-
 
 bsc_value = black_scholes(S0, K, B, T, r, q, sigma)
 bsc_value
-
-
-# In[150]:
 
 
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(crr)
 
 
-# In[151]:
-
-
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_CRR'] = df["CRR"] - bsc_value 
 
 
-# In[152]:
-
-
-# INSPECT THE FIRST ROWS OF THE DATAFRAME
+# INSPECT THE DATAFRAME
 df.head()
-
-
-# In[153]:
-
-
-# INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[154]:
 
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q3crrb.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[160]:
-
+# Binomial Model Error Rate
 
 fig, ax1 = plt.subplots(figsize=(14,10))
 ax1.set_ylabel('Error')
@@ -283,9 +179,3 @@ plt.show()
 
 
 # Now let's try some extrapolation
-
-# In[ ]:
-
-
-
-
