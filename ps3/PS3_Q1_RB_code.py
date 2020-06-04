@@ -1,112 +1,50 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # FIN 514 - PS3 Q1 RB
-# **Spring 2020**
-# 
+# FIN 514 - PS3 Q1 RB Spring 2020 
 # This notebook provides the graphs for PS3 Q1 for the RB model
-# 
-# ## Packages and Configurations
-# 
+
+# Packages and Configurations
+
 # The following common packages will be use on this notebook.
-# 
+
 # * numpy - [https://numpy.org/](https://numpy.org/)
 # * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
 # * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
 # * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
-
-# In[1]:
-
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
-
-
-# 
-
-# 
-# 
-
-# 
-
-# In[2]:
-
+ 
 
 # ENTER INPUT FOR: start_step
-
 start_step = 50
 
-
-# In[3]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 1000
 
-
-# In[4]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[5]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 95.0
 
-
-# In[6]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[7]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[8]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[9]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
-
-
-# In[10]:
-
 
 # ENTER INPUT FOR: whether option is call (1) or put (0)
 cp = 0
 
 
-# ## Black-Sholes Model 
-
-# In[11]:
-
+# Black-Sholes Model 
 
 def black_scholes(S0, K, T, r, q, sigma, cp):
     """
@@ -137,11 +75,7 @@ def black_scholes(S0, K, T, r, q, sigma, cp):
     return value
 
 
-# ## Binomial Model Function
-
-# In[12]:
-
-
+# Binomial Model Function
 
 def RBE_model(S0, K, T, r, sigma, start_step, N):
     """
@@ -209,74 +143,33 @@ def RBE_model(S0, K, T, r, sigma, start_step, N):
 
     return rbe_result
 
-
-# In[13]:
-
-
 rb = RBE_model(S0, K, T, r, sigma, start_step, N)
-
-
-# In[14]:
-
 
 bsc_value = black_scholes(S0, K, T, r, q, sigma,cp)
 bsc_value
-
-
-# In[15]:
-
 
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(rb)
 
 
-# In[16]:
-
-
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_RB'] = df["RB"] - bsc_value 
 
-
-# In[17]:
-
-
 # INSPECT THE FIRST ROWS OF THE DATAFRAME
 df.head()
-
-
-# In[18]:
 
 
 # INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
 
 
-# In[19]:
-
-
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q1rbe.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[20]:
-
+# Binomial Model Error Rate
 
 plt.figure(figsize=(14,10))
 plt.plot(df['num_steps'], df['error_RB'], 'o', markersize=3)
 plt.savefig('Images/Q1_rbe.png')
 plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
