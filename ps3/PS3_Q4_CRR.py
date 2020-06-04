@@ -1,114 +1,40 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # FIN 514 - PS3 Q4 CRR
-# **Spring 2020**
-# 
-# This notebook provides the graphs for PS3 Q4 for the CRR model
-# 
-# ## Packages and Configurations
-# 
-# The following common packages will be use on this notebook.
-# 
-# * numpy - [https://numpy.org/](https://numpy.org/)
-# * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
-# * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
-# * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
-
-# In[22]:
-
+# FIN 514 - PS3 Q4 CRR
+# Spring 2020
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
 
-
-# 
-
-# 
-# 
-
-# 
-
-# In[23]:
-
-
 # ENTER INPUT FOR: start_step
-
 start_step = 5
 
-
-# In[24]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 100
 
-
-# In[25]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[26]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 100
-
-
-# In[27]:
-
 
 # ENTER INPUT FOR: B = Barrier level
 B = 95
 
-
-# In[28]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[29]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[30]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[31]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
 
 
-# ## Binomial Model Function
-
-# In[32]:
-
-
-
+# Binomial Model Function
 def CRRDB_model(S0, K, B, T, r, sigma, start_step, N):
     """
     Function to calculates the value of a European Put Option using the CRR Binomial Model 
@@ -193,58 +119,28 @@ def CRRDB_model(S0, K, B, T, r, sigma, start_step, N):
 
     return crrdb_result
 
-
-# In[33]:
-
-
 crr = CRRDB_model(S0, K, B, T, r, sigma, start_step, N)
-
-
-# In[34]:
-
 
 exact = 5.6711051343
 
-
-# In[35]:
-
-
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(crr)
-
-
-# In[36]:
 
 
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_CRR'] = df["CRR"] - exact 
 
 
-# In[37]:
-
-
-# INSPECT THE FIRST ROWS OF THE DATAFRAME
+# INSPECT THE DATAFRAME
 df.head()
-
-
-# In[38]:
-
-
-# INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[39]:
 
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q4crrdb.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[40]:
-
+# Binomial Model Error Rate
 
 fig, ax1 = plt.subplots(figsize=(14,10))
 ax1.set_ylabel('Error')
@@ -257,9 +153,3 @@ plt.show()
 
 
 # Now let's try some extrapolation
-
-# In[ ]:
-
-
-
-
