@@ -1,113 +1,48 @@
-#!/usr/bin/env python
-# coding: utf-8
+# FIN 514 - PS3 Q1 LR Spring 2020
 
-# # FIN 514 - PS3 Q1 LR
-# **Spring 2020**
-# 
 # This notebook provides the graphs for PS3 Q1 for the LR model
-# 
-# ## Packages and Configurations
-# 
+# Packages and Configurations
 # The following common packages will be use on this notebook.
-# 
-# * numpy - [https://numpy.org/](https://numpy.org/)
-# * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
-# * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
-# * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
 
-# In[2]:
-
+# numpy - [https://numpy.org/](https://numpy.org/)
+# Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
+# matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
+# Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
 
-
-# 
-
-# 
-# 
-
-# 
-
-# In[3]:
-
-
 # ENTER INPUT FOR: start_step
-
 start_step = 51
 
-
-# In[22]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 1000
 
-
-# In[23]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[24]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 95.0
 
-
-# In[25]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[26]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[27]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[28]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
-
-
-# In[29]:
-
 
 # ENTER INPUT FOR: whether option is call (1) or put (0)
 cp = 0
 
 
-# ## Black-Sholes Model 
-
-# In[30]:
-
-
+# Black-Sholes Model 
 def black_scholes(S0, K, T, r, q, sigma, cp):
     """
     Function to calculates the value of a European Call Option using Black Scholes 
@@ -137,12 +72,7 @@ def black_scholes(S0, K, T, r, q, sigma, cp):
     return value
 
 
-# ## Binomial Model Function
-
-# In[31]:
-
-
-
+# Binomial Model Function
 def LRE_model(S0, K, T, r, sigma, start_step, N):
     """
     Function to calculates the value of a European Put Option using the CRR Binomial Model 
@@ -217,73 +147,29 @@ def LRE_model(S0, K, T, r, sigma, start_step, N):
     return lre_result
 
 
-# In[32]:
-
-
 lr = LRE_model(S0, K, T, r, sigma, start_step, N)
-
-
-# In[33]:
-
 
 bsc_value = black_scholes(S0, K, T, r, q, sigma,cp)
 bsc_value
 
-
-# In[34]:
-
-
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(lr)
-
-
-# In[35]:
-
 
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_LR'] = df["LR"] - bsc_value 
 
-
-# In[36]:
-
-
 # INSPECT THE FIRST ROWS OF THE DATAFRAME
 df.head()
 
-
-# In[37]:
-
-
 # INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[38]:
-
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q1lre.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[39]:
-
-
+# Binomial Model Error Rate
 plt.figure(figsize=(14,10))
 plt.plot(df['num_steps'], df['error_LR'], 'o', markersize=3)
 plt.savefig('Images/Q1_lre.png')
 plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
