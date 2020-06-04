@@ -1,101 +1,35 @@
-#!/usr/bin/env python
-# coding: utf-8
-## Spring 2020
-
-This notebook provides the exact value for PS3 Q2 
-
-Packages and Configurations
-The following common packages will be use on this notebook.
-
-numpy - https://numpy.org/
-Pandas - https://pandas.pydata.org/
-matplotlib - https://matplotlib.org/
-Scipy Statistical functions - https://docs.scipy.org/doc/scipy/reference/stats.html
-import numpy as np
-import pandas as pd
-import scipy.stats as st
-import matplotlib.pyplot as plt
-
-# In[1]:
-
+## PS3 Spring 2020
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
-
-
-# In[2]:
-
 
 # ENTER INPUT FOR: start_step
-
 start_step = 10001
 
-
-# In[3]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 10009
 
-
-# In[4]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[5]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 95.0
 
-
-# In[6]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[7]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[8]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[9]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
 
-
-# 
-
-# ## Binomial Model Function
-
-# In[13]:
-
-
+# Binomial Model Function
 
 def LREXACT_model(S0, K, T, r, sigma, start_step, N):
     """
@@ -171,43 +105,17 @@ def LREXACT_model(S0, K, T, r, sigma, start_step, N):
 
     return lrexact_result
 
-
-# In[14]:
-
-
 lr = LREXACT_model(S0, K, T, r, sigma, start_step, N)
-
-
-# In[15]:
 
 
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(lr)
 
 
-# In[16]:
-
-
-# INSPECT THE FIRST ROWS OF THE DATAFRAME
+# INSPECT THE DATAFRAME
 df.head()
-
-
-# In[17]:
-
-
-# INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[18]:
 
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q2_lrexact.csv", index=False)
-
-
-# In[ ]:
-
-
-
-
