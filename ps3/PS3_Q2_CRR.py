@@ -1,22 +1,16 @@
-#!/usr/bin/env python
-# coding: utf-8
+# FIN 514 - PS3 Q1 CRR
+# Spring 2020
 
-# # FIN 514 - PS3 Q1 CRR
-# **Spring 2020**
-# 
-# This notebook provides the graphs for PS3 Q1 for the CRR model
-# 
-# ## Packages and Configurations
-# 
-# The following common packages will be use on this notebook.
-# 
-# * numpy - [https://numpy.org/](https://numpy.org/)
-# * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
-# * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
-# * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
+# This file provides the graphs for PS3 Q1 for the CRR model
+ 
+# Packages and Configurations
 
-# In[1]:
+# The following common packages will be use in this file.
+
+# numpy - [https://numpy.org/](https://numpy.org/)
+# Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
+# matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
+# Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
 
 
 import numpy as np
@@ -25,82 +19,32 @@ import scipy.stats as st
 import matplotlib.pyplot as plt
 
 
-# 
-
-# 
-# 
-
-# 
-
-# In[2]:
-
-
 # ENTER INPUT FOR: start_step
-
 start_step = 50
 
-
-# In[3]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 1000
 
-
-# In[4]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[5]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 95.0
 
-
-# In[6]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[7]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[8]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
-
-
-# In[9]:
-
-
+ 
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
 
 
-# ## Binomial Model Function
-
-# In[10]:
-
-
+# Binomial Model Function
 
 def CRRA_model(S0, K, T, r, sigma, start_step, N):
     """
@@ -170,59 +114,28 @@ def CRRA_model(S0, K, T, r, sigma, start_step, N):
     return crra_result
 
 
-# In[11]:
-
-
 crr = CRRA_model(S0, K, T, r, sigma, start_step, N)
-
-
-# In[ ]:
-
 
 # Get the exact value from part a) 
 exact = 2.51891627
 
-
-# In[ ]:
-
-
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(crr)
-
-
-# In[ ]:
-
 
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_CRR'] = df["CRR"] - exact 
 
-
-# In[ ]:
-
-
 # INSPECT THE FIRST ROWS OF THE DATAFRAME
 df.head()
 
-
-# In[ ]:
-
-
 # INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[ ]:
-
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q2crra.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[ ]:
-
-
+# Binomial Model Error Rate
 plt.figure(figsize=(14,10))
 plt.plot(df['num_steps'], df['error_CRR'], 'o', markersize=3)
 plt.savefig('Images/Q2_crra.png')
@@ -230,9 +143,3 @@ plt.show()
 
 
 # Now let's try some extrapolation
-
-# In[ ]:
-
-
-
-
