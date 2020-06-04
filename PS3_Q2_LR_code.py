@@ -1,113 +1,40 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # FIN 514 - PS3 Q2 BD
-# **Spring 2020**
-# 
-# This notebook provides the graphs for PS3 Q2 for the BD model
-# 
-# ## Packages and Configurations
-# 
-# The following common packages will be use on this notebook.
-# 
-# * numpy - [https://numpy.org/](https://numpy.org/)
-# * Pandas - [https://pandas.pydata.org/](https://pandas.pydata.org/)
-# * matplotlib - [https://matplotlib.org/](https://matplotlib.org/)
-# * Scipy Statistical functions - [https://docs.scipy.org/doc/scipy/reference/stats.html](https://docs.scipy.org/doc/scipy/reference/stats.html)
-# 
-
-# In[25]:
-
+# FIN 514 - PS3 Q2 BD
+# Spring 2020
 
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
 
-
-# 
-
-# 
-# 
-
-# 
-
-# In[26]:
-
-
 # ENTER INPUT FOR: start_step
-
 start_step = 51
 
-
-# In[27]:
-
-
 # ENTER INPUT FOR: N = num_steps
-
 N = 1001
 
-
-# In[28]:
-
-
 # ENTER INPUT FOR: S0 = Original Stock Price
-
 S0 = 100.0
 
-
-# In[29]:
-
-
 # ENTER INPUT FOR: K = Excercise Price of Call Option
-
 K = 95.0
 
-
-# In[30]:
-
-
 # ENTER INPUT FOR: sigma = Annualized (Future) Volatility of Stock Price Returns
-
 sigma = 0.3
 
-
-# In[31]:
-
-
 # ENTER INPUT FOR: r = Annualized Continously Compounded Risk-free Rate
-
 r = 0.1
 
-
-# In[32]:
-
-
 # ENTER INPUT FOR: T = Time Length of Option in which to Exercise (In Years)
-
 T = 0.2
 
-
-# In[33]:
-
-
 # ENTER INPUT FOR: q = Rate of continuous dividend paying asset 
-
 q = 0
-
-
-# In[34]:
-
 
 # ENTER INPUT FOR: whether option is call (1) or put (0)
 cp = 0
 
 
-# ## Binomial Model Function
-
-# In[35]:
-
-
+# Binomial Model Function
 
 def LRA_model(S0, K, T, r, sigma, start_step, N):
     """
@@ -183,73 +110,27 @@ def LRA_model(S0, K, T, r, sigma, start_step, N):
 
     return lra_result
 
-
-# In[36]:
-
-
 lr = LRA_model(S0, K, T, r, sigma, start_step, N)
 
-
-# In[37]:
-
-
 exact = 2.51891627
-
-
-# In[38]:
 
 
 # CREATE A DATAFRAME FROM THE BINOMIAL MODEL OUTPUT
 df = pd.DataFrame.from_dict(lr)
 
-
-# In[39]:
-
-
 # CALCULATE THE ERROR FROM BINOMIAL MODEL COMPARED WITH BLACK-SHCOLES
 df['error_LR'] = df["LR"] - exact
 
-
-# In[40]:
-
-
-# INSPECT THE FIRST ROWS OF THE DATAFRAME
+# inspect the data frame
 df.head()
-
-
-# In[41]:
-
-
-# INSPECT THE LAST ROWS OF THE DATAFRAME
 df.tail()
-
-
-# In[42]:
-
 
 # EXPORT THE DATA TO A CSV FILE
 df.to_csv("Data/Q2lra.csv", index=False)
 
 
-# ### Binomial Model Error Rate
-
-# In[43]:
-
-
+# Binomial Model Error Rate
 plt.figure(figsize=(14,10))
 plt.plot(df['num_steps'], df['error_LR'], 'o', markersize=3)
 plt.savefig('Images/Q2_lra.png')
 plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
